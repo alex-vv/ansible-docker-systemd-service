@@ -7,9 +7,9 @@ Generic role for creating systemd services to manage docker containers.
 ```yaml
 - name: Start WebApp
   include_role:
-    name: docker-systemd-service
+    name: docker_systemd_service
   vars:
-    name: myapp
+    service_name: myapp
     image: myapp:latest
     args: >
       --link mysql
@@ -27,7 +27,7 @@ This will create:
 
 ### Role variables
 
-* `name` (**required**) - name of the service
+* `service_name` (**required**) - name of the service
 
 #### Docker container specifics
 
@@ -53,7 +53,8 @@ This will create:
 Put this in your `requirements.yml`:
 
 ```yml
-- role: mhutter.docker-systemd-service
+- src: https://github.com/alex-vv/ansible-docker-systemd-service
+  name: docker_systemd_service
 ```
 
 and run `ansible-galaxy install -r requirements.yml`.

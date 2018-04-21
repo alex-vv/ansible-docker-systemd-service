@@ -9,13 +9,13 @@ Requires=docker.service
 
 [Service]
 {% if env is defined %}
-EnvironmentFile={{ sysconf_dir }}/{{ name }}
+EnvironmentFile={{ sysconf_dir }}/{{ service_name }}
 {% endif %}
-ExecStartPre=-/usr/bin/docker rm -f {{ name }}
-ExecStart=/usr/bin/docker run --name {{ name }} --rm {% if env is defined %}--env-file {{ sysconf_dir }}/{{ name }} {% endif %}{{ params('v', volumes) }}{{ params('p', ports) }}{{ params('-link', links) }}{{ params('l', labels) }}{{ args | default('') |trim }} {{ image }} {{ cmd | default('') | trim }}
-ExecStop=/usr/bin/docker stop {{ name }}
+ExecStartPre=-/usr/bin/docker rm -f {{ service_name }}
+ExecStart=/usr/bin/docker run --name {{ service_name }} --rm {% if env is defined %}--env-file {{ sysconf_dir }}/{{ service_name }} {% endif %}{{ params('v', volumes) }}{{ params('p', ports) }}{{ params('-link', links) }}{{ params('l', labels) }}{{ args | default('') |trim }} {{ image }} {{ cmd | default('') | trim }}
+ExecStop=/usr/bin/docker stop {{ service_name }}
 
-SyslogIdentifier={{ name }}
+SyslogIdentifier={{ service_name }}
 Restart=always
 
 [Install]
